@@ -134,3 +134,12 @@ def test_release_upload_rejects_zip_without_manifest():
 def test_release_apply_without_pending_fails():
     response = client.post("/admin/release/apply", headers=HEADERS)
     assert response.status_code == 400
+
+def test_provider_catalog_does_not_expose_credentials():
+    response = client.get("/admin/providers", headers=HEADERS)
+    assert response.status_code == 200
+    data = response.json()
+    assert "chain" in data
+    raw = response.text
+    assert "MIAI_" not in raw
+    assert "API_KEY" not in raw

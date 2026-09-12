@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import os
 from pathlib import Path
 from typing import Literal
 
@@ -10,6 +11,7 @@ from python.admin.auth import make_owner_dependency
 from python.admin.providers import ZERO_COST_PROVIDERS, build_provider
 from python.admin.release_manager import ReleaseError, ReleaseManager
 from python.admin.store import AdminStore
+from python.admin.provider_manager import ProviderManager
 from python.core.version import VERSION
 
 
@@ -71,6 +73,23 @@ def create_admin_router(engine, admin_store: AdminStore, release_manager: Releas
         admin_store.log_audit(f"policy:cost:{body.policy}", level="admin")
         return _status()
 
+    @router.get("/providers")
+    def providers():
+        """Expose routing metadata without exposing credentials."""
+        return {
+            "primary": _status()["active_provider"],
+            "chain": [
+                {
+                    "name": spec.name,
+                    "configured": spec.configured,
+                    "model": spec.model,
+                    "local": spec.local,
+                }
+                for spec in ProviderManager.configured_specs()
+            ],
+            "retries": int(os.getenv("MIAI_RETRIES", "1")),
+        }
+
     @router.post("/provider/switch")
     def switch_provider(body: ProviderSwitchRequest):
         provider_name = body.provider.strip().lower()
@@ -88,7 +107,18 @@ def create_admin_router(engine, admin_store: AdminStore, release_manager: Releas
                 ),
             )
         try:
-            new_provider = build_provider(provider_name, body.model)
+            # Keep the selected provider explicit, but automatically attach the
+            # configured fallback chain. This preserves the existing switch
+            # contract while making fallback a Core concern.
+            fallback_names = [
+                spec.name for spec in ProviderManager.configured_specs()
+                if spec.name != provider_name and spec.configured
+            ]
+            new_provider = ProviderManager(
+                provider=provider_name,
+                model=body.model,
+                fallback_names=fallback_names,
+            ).build(strict_primary=True)
         except ValueError as exc:
             admin_store.log_audit(f"provider:switch_failed:{provider_name}", level="error", error_message=str(exc))
             raise HTTPException(status_code=400, detail=str(exc)) from exc

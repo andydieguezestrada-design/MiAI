@@ -3,6 +3,7 @@ from __future__ import annotations
 import hashlib
 import hmac
 import secrets
+import os
 
 from fastapi import Header, HTTPException
 
@@ -34,8 +35,14 @@ def has_credentials(store: AdminStore) -> bool:
 
 
 def verify_token(store: AdminStore, token: str) -> bool:
+    """Verify the owner token from the persistent hash or an injected runtime secret."""
+    if not token:
+        return False
+    runtime_token = os.getenv("MIAI_OWNER_TOKEN", "")
+    if runtime_token and hmac.compare_digest(runtime_token, token):
+        return True
     stored = store.get_setting(_TOKEN_HASH_KEY)
-    if not stored or not token:
+    if not stored:
         return False
     return hmac.compare_digest(stored, _hash(token))
 
@@ -52,12 +59,12 @@ def make_owner_dependency(store: AdminStore):
     MiAI Admin Android app sends on every /admin/* request."""
 
     def require_owner(x_owner_token: str = Header(default="", alias="X-Owner-Token")) -> str:
-        if not has_credentials(store):
+        if not has_credentials(store) and not os.getenv("MIAI_OWNER_TOKEN", ""):
             raise HTTPException(
                 status_code=503,
                 detail=(
-                    "No hay Owner Token configurado en este Core. Genera uno con "
-                    "'python scripts/generate_owner_token.py --url <URL>' antes de vincular la app."
+                    "No hay Owner Token configurado en este Core. Define MIAI_OWNER_TOKEN "
+                    "o genera uno con 'python scripts/generate_owner_token.py --url <URL>'."
                 ),
             )
         if not verify_token(store, x_owner_token):

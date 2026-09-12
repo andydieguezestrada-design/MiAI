@@ -1,0 +1,27 @@
+services:
+  - type: web
+    name: miai-core
+    runtime: docker
+    plan: free
+    healthCheckPath: /health
+    envVars:
+      - key: MIAI_PROVIDER
+        value: openai_compatible
+      - key: MIAI_BASE_URL
+        sync: false
+      - key: MIAI_API_KEY
+        sync: false
+      - key: MIAI_MODEL
+        sync: false
+      - key: MIAI_OWNER_TOKEN
+        sync: false
+      - key: MIAI_FALLBACK_PROVIDERS
+        value: ""
+      - key: MIAI_RETRIES
+        value: "1"
+      - key: MIAI_AUTO_REFINE
+        value: "true"
+      - key: MIAI_MEMORY_DB
+        value: data/miai_memory.sqlite3
+      - key: MIAI_ADMIN_DB
+        value: data/miai_admin.sqlite3
