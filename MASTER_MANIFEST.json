@@ -1,0 +1,19 @@
+{
+  "name": "MiAI V1 -> Latest Complete Master",
+  "current_runtime": "V0.12-B4",
+  "status": "Release Candidate / experimental until real embedding benchmark is validated",
+  "included_history": [
+    "V1/V2 integrated",
+    "V0.3 memory",
+    "V0.4 tools",
+    "V0.5 agent",
+    "V0.9/V0.10 vision/streaming evolution",
+    "V0.11/V0.11.1 RAG baseline",
+    "V0.12 B1",
+    "V0.12 B2",
+    "V0.12 B3",
+    "V0.12 B4"
+  ],
+  "note": "The root project is the latest authoritative runtime. Historical package snapshots are preserved under history/packages for reproducibility.",
+  "created_utc": "2026-09-11T14:37:36.263991+00:00"
+}

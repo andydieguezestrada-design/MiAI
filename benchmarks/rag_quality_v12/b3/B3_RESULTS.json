@@ -1,0 +1,63 @@
+{
+  "version": "V0.12-B3",
+  "candidate_pool": 366,
+  "method": "semantic-first reranking over hybrid candidates + quality gate",
+  "fixture": "deterministic semantic topic embedding",
+  "results": [
+    {
+      "positive_hit_rate_at1": 1.0,
+      "positive_hit_rate_at3": 1.0,
+      "mrr": 1.0,
+      "false_positive_rate": 0.0,
+      "no_context_accuracy": 1.0,
+      "config": "rerank_gate_020",
+      "gate": 0.2,
+      "min_semantic": 0.0,
+      "avg_latency_ms": 4.136282217391441
+    },
+    {
+      "positive_hit_rate_at1": 1.0,
+      "positive_hit_rate_at3": 1.0,
+      "mrr": 1.0,
+      "false_positive_rate": 0.0,
+      "no_context_accuracy": 1.0,
+      "config": "rerank_gate_030",
+      "gate": 0.3,
+      "min_semantic": 0.0,
+      "avg_latency_ms": 3.9030847391306684
+    },
+    {
+      "positive_hit_rate_at1": 1.0,
+      "positive_hit_rate_at3": 1.0,
+      "mrr": 1.0,
+      "false_positive_rate": 0.0,
+      "no_context_accuracy": 1.0,
+      "config": "rerank_gate_040",
+      "gate": 0.4,
+      "min_semantic": 0.0,
+      "avg_latency_ms": 3.846802826087548
+    },
+    {
+      "positive_hit_rate_at1": 1.0,
+      "positive_hit_rate_at3": 1.0,
+      "mrr": 1.0,
+      "false_positive_rate": 0.0,
+      "no_context_accuracy": 1.0,
+      "config": "rerank_semantic_020",
+      "gate": 0.2,
+      "min_semantic": 0.2,
+      "avg_latency_ms": 4.0157984782613605
+    },
+    {
+      "positive_hit_rate_at1": 1.0,
+      "positive_hit_rate_at3": 1.0,
+      "mrr": 1.0,
+      "false_positive_rate": 0.0,
+      "no_context_accuracy": 1.0,
+      "config": "rerank_semantic_030",
+      "gate": 0.2,
+      "min_semantic": 0.3,
+      "avg_latency_ms": 4.239329130434392
+    }
+  ]
+}

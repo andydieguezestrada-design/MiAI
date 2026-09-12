@@ -1,0 +1,9 @@
+provider: ollama
+model: llama3.2:3b
+ollama_url: http://localhost:11434
+base_url: ""
+request_timeout_seconds: 120
+system_prompt: |
+  Eres MiAI, un asistente técnico y de razonamiento.
+  Responde con precisión, contexto y argumentos. No inventes datos.
+  Si falta información, dilo claramente y pide o identifica el dato necesario.

@@ -1,0 +1,17 @@
+V0.11.1 BASELINE
+mode=baseline threshold=0.08
+positive_hit_rate=100.0%
+negative_rejection_rate=37.5%
+false_positive_rate=62.5%
+mrr=0.933
+
+V0.12-B1 EXPERIMENTAL LEXICAL
+mode=v12-lexical threshold=0.08
+positive_hit_rate=40.0%
+negative_rejection_rate=100.0%
+false_positive_rate=0.0%
+mrr=0.367
+
+DECISION
+Do not merge the lexical prototype. It improves rejection but causes a severe recall regression.
+Next: B2 semantic + hybrid evaluation.

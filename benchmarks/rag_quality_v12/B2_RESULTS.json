@@ -1,0 +1,34 @@
+{
+  "version": "V0.12-B2",
+  "candidate_pool": 366,
+  "fixture": "deterministic semantic topic embedding",
+  "results": [
+    {
+      "mode": "lexical",
+      "positive_hit_rate_at3": 1.0,
+      "positive_hit_rate_at1": 0.8666666666666667,
+      "mrr": 0.9333333333333333,
+      "false_positive_rate": 0.625,
+      "no_context_accuracy": 0.375,
+      "avg_latency_ms": 5.243235782609623
+    },
+    {
+      "mode": "semantic",
+      "positive_hit_rate_at3": 1.0,
+      "positive_hit_rate_at1": 1.0,
+      "mrr": 1.0,
+      "false_positive_rate": 0.0,
+      "no_context_accuracy": 1.0,
+      "avg_latency_ms": 2.872780000000111
+    },
+    {
+      "mode": "hybrid",
+      "positive_hit_rate_at3": 1.0,
+      "positive_hit_rate_at1": 1.0,
+      "mrr": 1.0,
+      "false_positive_rate": 0.625,
+      "no_context_accuracy": 0.375,
+      "avg_latency_ms": 6.88722717391398
+    }
+  ]
+}

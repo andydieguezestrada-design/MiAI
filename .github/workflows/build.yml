@@ -1,0 +1,94 @@
+name: MiAI Core Build
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+  workflow_dispatch:
+    inputs:
+      reason:
+        description: "Motivo de la ejecución"
+        required: false
+        default: "manual validation"
+
+concurrency:
+  group: miai-ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  python-tests:
+    name: Python tests
+    runs-on: ubuntu-latest
+    env:
+      MIAI_PROVIDER: mock
+      MIAI_MEMORY_DB: data/ci_memory.sqlite3
+      MIAI_AUTO_REFINE: "true"
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+      - name: Set up Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r requirements.txt
+      - name: Compile Python sources
+        run: python -m compileall -q api python tests
+      - name: Run full test suite
+        run: python -m pytest -q
+
+  cpp-build:
+    name: C++ CMake build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+      - name: Configure
+        run: cmake -S cpp -B build/cpp -DCMAKE_BUILD_TYPE=Release
+      - name: Build
+        run: cmake --build build/cpp --config Release --parallel
+
+  api-validation:
+    name: API validation
+    runs-on: ubuntu-latest
+    env:
+      MIAI_PROVIDER: mock
+      MIAI_MEMORY_DB: data/ci_memory.sqlite3
+      MIAI_AUTO_REFINE: "true"
+    needs: [python-tests, cpp-build]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+      - name: Set up Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r requirements.txt
+      - name: Validate API version, release contract and import
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          from api.main import app
+          from python.core.version import VERSION, CHANNEL, UPDATE_POLICY, AUTO_UPDATE
+
+          manifest = json.loads(Path("release.json").read_text(encoding="utf-8"))
+          assert app.version == VERSION, (app.version, VERSION)
+          assert manifest["version"] == VERSION, (manifest["version"], VERSION)
+          assert manifest["channel"] == CHANNEL
+          assert manifest["update_policy"] == UPDATE_POLICY
+          assert manifest["auto_update"] is AUTO_UPDATE is False
+          print(f"{app.title} {app.version} | {CHANNEL} | {UPDATE_POLICY}")
+          PY
+      - name: API smoke tests
+        run: |
+          python -m pytest -q             tests/test_release_control.py             tests/test_v09.py             tests/test_v10.py             tests/test_vision.py

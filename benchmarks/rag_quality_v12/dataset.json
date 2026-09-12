@@ -1,0 +1,177 @@
+{
+  "version": "V0.12-B1",
+  "language": "es",
+  "project": "rag_quality_b1",
+  "documents": [
+    {
+      "id": "arquitectura",
+      "title": "MiAI arquitectura",
+      "content": "MiAI debe funcionar como un cerebro reutilizable para otras aplicaciones. Integra memoria, razonamiento, herramientas, visión y conocimiento recuperable."
+    },
+    {
+      "id": "memoria",
+      "title": "Memoria semántica",
+      "content": "La memoria semántica conserva hechos persistentes por proyecto y permite recuperar información relevante en conversaciones futuras."
+    },
+    {
+      "id": "herramientas",
+      "title": "Motor de herramientas",
+      "content": "El motor de herramientas registra funciones, valida argumentos y ejecuta operaciones permitidas mediante un registro de herramientas."
+    },
+    {
+      "id": "streaming",
+      "title": "Streaming",
+      "content": "El streaming entrega tokens progresivamente mediante eventos SSE para reducir la latencia percibida durante una respuesta."
+    },
+    {
+      "id": "vision",
+      "title": "Vision Engine",
+      "content": "El motor de visión recibe imágenes codificadas y produce análisis multimodal sin guardar necesariamente el archivo."
+    },
+    {
+      "id": "seguridad",
+      "title": "Seguridad de despliegue",
+      "content": "La API debe proteger endpoints sensibles con autenticación y autorización antes de exponerse fuera de un entorno local."
+    }
+  ],
+  "queries": [
+    {
+      "id": "q01",
+      "gold": "arquitectura",
+      "type": "positive",
+      "text": "MiAI debe ser un cerebro reutilizable"
+    },
+    {
+      "id": "q02",
+      "gold": "arquitectura",
+      "type": "positive",
+      "text": "arquitectura cognitiva reutilizable para aplicaciones"
+    },
+    {
+      "id": "q03",
+      "gold": "arquitectura",
+      "type": "positive",
+      "text": "cómo integrar memoria razonamiento y herramientas"
+    },
+    {
+      "id": "q04",
+      "gold": "memoria",
+      "type": "positive",
+      "text": "qué información conserva la memoria semántica"
+    },
+    {
+      "id": "q05",
+      "gold": "memoria",
+      "type": "positive",
+      "text": "recuperar hechos persistentes de un proyecto"
+    },
+    {
+      "id": "q06",
+      "gold": "memoria",
+      "type": "positive",
+      "text": "guardar conocimiento para conversaciones futuras"
+    },
+    {
+      "id": "q07",
+      "gold": "herramientas",
+      "type": "positive",
+      "text": "cómo funciona el registro de herramientas"
+    },
+    {
+      "id": "q08",
+      "gold": "herramientas",
+      "type": "positive",
+      "text": "validación de argumentos para ejecutar funciones"
+    },
+    {
+      "id": "q09",
+      "gold": "herramientas",
+      "type": "positive",
+      "text": "operaciones permitidas mediante herramientas"
+    },
+    {
+      "id": "q10",
+      "gold": "streaming",
+      "type": "positive",
+      "text": "cómo se envían tokens progresivamente"
+    },
+    {
+      "id": "q11",
+      "gold": "streaming",
+      "type": "positive",
+      "text": "eventos SSE para reducir latencia"
+    },
+    {
+      "id": "q12",
+      "gold": "vision",
+      "type": "positive",
+      "text": "analizar una imagen con el motor de visión"
+    },
+    {
+      "id": "q13",
+      "gold": "vision",
+      "type": "positive",
+      "text": "análisis multimodal de imágenes"
+    },
+    {
+      "id": "q14",
+      "gold": "seguridad",
+      "type": "positive",
+      "text": "cómo proteger endpoints de la API"
+    },
+    {
+      "id": "q15",
+      "gold": "seguridad",
+      "type": "positive",
+      "text": "autenticación y autorización para despliegue"
+    },
+    {
+      "id": "q16",
+      "gold": null,
+      "type": "negative",
+      "text": "receta tradicional de pizza napolitana"
+    },
+    {
+      "id": "q17",
+      "gold": null,
+      "type": "negative",
+      "text": "capital de Francia y su población"
+    },
+    {
+      "id": "q18",
+      "gold": null,
+      "type": "negative",
+      "text": "mejor cámara para fotografía nocturna"
+    },
+    {
+      "id": "q19",
+      "gold": null,
+      "type": "negative",
+      "text": "cómo cambiar una rueda de coche"
+    },
+    {
+      "id": "q20",
+      "gold": null,
+      "type": "negative",
+      "text": "historia del imperio romano"
+    },
+    {
+      "id": "q21",
+      "gold": null,
+      "type": "negative",
+      "text": "precio de vuelos a Tokio"
+    },
+    {
+      "id": "q22",
+      "gold": null,
+      "type": "negative",
+      "text": "pronóstico del tiempo mañana"
+    },
+    {
+      "id": "q23",
+      "gold": null,
+      "type": "negative",
+      "text": "cómo preparar café espresso"
+    }
+  ]
+}
